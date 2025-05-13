@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EnoyTech - Premium Electronics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    .product-card-animation {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card-animation:hover {
+      transform: translateY(-8px);
+    }
+    .badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .cart-animation {
+      animation: fadeInRight 0.5s ease-out forwards;
+    }
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    .notification {
+      animation: slideInOut 2s ease-in-out forwards;
+      transform: translateY(-100%);
+    }
+    @keyframes slideInOut {
+      0% { transform: translateY(-100%); }
+      15% { transform: translateY(0); }
+      85% { transform: translateY(0); }
+      100% { transform: translateY(-100%); }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  
+  <!-- Notification Toast -->
+  <div id="notification" class="fixed top-0 left-0 right-0 z-50 notification">
+    <div class="max-w-md mx-auto bg-green-100 border-l-4 border-green-500 p-4 flex items-center shadow-lg">
+      <div class="text-green-500 mr-3">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <div class="text-green-800 text-sm font-medium" id="notificationText"></div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <a href="#" class="text-2xl font-bold text-primary-600 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
+          </svg>
+          EnoyTech
+        </a>
+        <ul class="hidden md:flex space-x-8">
+          <li><a href="#" class="text-primary-600 border-b-2 border-primary-600 font-medium">Home</a></li>
+          <li><a href="#" class="text-gray-700 hover:text-primary-600 font-medium" >Products</a></li>
+          <li><a href="#" class="text-gray-700 hover:text-primary-600 font-medium">History</a></li>
+          <li><a href="#" class="text-gray-700 hover:text-primary-600 font-medium">invoice</a></li>
+          <li><a href="#" class="text-gray-700 hover:text-primary-600 font-medium">Support</a></li>
+        </ul>
+        <div class="flex items-center space-x-4">
+          <button id="cartToggleBtn" class="relative text-gray-700 hover:text-primary-600 p-2 group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center group-hover:bg-red-600 shadow">0</span>
+          </button>
+          <button class="md:hidden text-gray-700 focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Banner -->
+  <div class="bg-gradient-to-r from-primary-600 to-blue-800 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="md:flex items-center justify-between">
+        <div class="md:w-1/2 mb-8 md:mb-0">
+          <h1 class="text-4xl font-bold mb-4">Premium Tech Products</h1>
+          <p class="text-lg mb-6 text-blue-100">Discover the latest gadgets and electronics for your digital lifestyle.</p>
+          <button class="bg-white text-primary-700 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors shadow-lg">Shop Best Sellers</button>
+        </div>
+        <div class="md:w-1/2 flex justify-center">
+          <img src="/api/placeholder/500/300?text=Tech+Products" alt="Featured Products" class="rounded-lg shadow-xl max-w-full h-auto" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <h2 class="text-xl font-semibold mb-4">Filter Products</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <label for="searchInput" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <input type="text" id="searchInput" placeholder="Find products..." class="pl-10 w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500" />
+          </div>
+        </div>
+        <div>
+          <label for="categoryFilter" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+          <select id="categoryFilter" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+            <option value="">All Categories</option>
+            <option value="Wearables">Wearables</option>
+            <option value="Audio">Audio</option>
+            <option value="Power">Power</option>
+          </select>
+        </div>
+        <div>
+          <label for="subCategoryFilter" class="block text-sm font-medium text-gray-700 mb-1">Subcategory</label>
+          <select id="subCategoryFilter" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+            <option value="">All Subcategories</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h2 class="text-2xl font-bold mb-6">Featured Products</h2>
+    <div id="productsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Product cards will be injected here -->
+    </div>
+  </div>
+
+  <!-- Shopping Cart Slide-Over -->
+  <div id="shoppingCart" class="relative z-40 hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-500/75 transition-opacity"></div>
+
+    <div class="fixed inset-0 overflow-hidden">
+      <div class="absolute inset-0 overflow-hidden">
+        <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+          <div class="pointer-events-auto w-screen max-w-md transform transition ease-in-out duration-500 cart-animation">
+            <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+              <div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+                <div class="flex items-start justify-between">
+                  <h2 class="text-xl font-semibold text-gray-900" id="slide-over-title">Your Cart</h2>
+                  <div class="ml-3 flex h-7 items-center">
+                    <button id="closeCartBtn" type="button" class="relative p-2 text-gray-400 hover:text-gray-500">
+                      <span class="absolute -inset-0.5"></span>
+                      <span class="sr-only">Close panel</span>
+                      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="mt-8">
+                  <div class="flow-root">
+                    <ul id="cartItems" role="list" class="-my-6 divide-y divide-gray-200">
+                      <!-- Cart items will be injected here -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
+                <div class="flex justify-between text-base font-medium text-gray-900 mb-3">
+                  <p>Subtotal</p>
+                  <p id="cartSubtotal">$0.00</p>
+                </div>
+                
+                <div class="flex justify-between text-base font-medium text-gray-900 mb-3">
+                  <p>Delivery Charge</p>
+                  <p>$70.00</p>
+                </div>
+                
+                <div class="flex justify-between text-lg font-bold text-gray-900 pb-4">
+                  <p>Total</p>
+                  <p id="cartTotal">$70.00</p>
+                </div>
+                
+                <div class="mt-6">
+                  <button id="checkoutBtn" class="w-full flex items-center justify-center rounded-md border border-transparent bg-primary-600 px-6 py-3 text-base font-medium text-white shadow-md hover:bg-primary-700 transition-colors">
+                    Place Order
+                  </button>
+                </div>
+                <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
+                  <p>
+                    or
+                    <button id="continueShopping" type="button" class="font-medium text-primary-600 hover:text-primary-500">
+                      Continue Shopping
+                      <span aria-hidden="true"> &rarr;</span>
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Form Modal -->
+  <div id="checkoutModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+    <div class="flex min-h-full items-center justify-center p-4">
+      <div class="fixed inset-0 bg-gray-500/75 transition-opacity"></div>
+      
+      <div class="relative bg-white rounded-lg max-w-2xl w-full shadow-xl overflow-hidden">
+        <div class="absolute top-0 right-0 pt-4 pr-4">
+          <button id="closeCheckoutModal" class="text-gray-400 hover:text-gray-500">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        <div class="px-6 pt-6 pb-4">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Complete Your Order</h2>
+          
+          <form id="checkoutForm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Contact Information</h3>
+                <div class="space-y-4">
+                  <div>
+                    <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" placeholder="Enter your full name">
+                  </div>
+                  <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                    <input type="email" id="email" name="email" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" placeholder="your@email.com">
+                  </div>
+                  <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" placeholder="(123) 456-7890">
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Shipping Address</h3>
+                <div class="space-y-4">
+                  <div>
+                    <label for="address" class="block text-sm font-medium text-gray-700">Street Address</label>
+                    <input type="text" id="address" name="address" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" placeholder="1234 Main St">
+                  </div>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+                      <input type="text" id="city" name="city" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" placeholder="City">
+                    </div>
+                    <div>
+                      <label for="zipCode" class="block text-sm font-medium text-gray-700">ZIP Code</label>
+                      <input type="text" id="zipCode" name="zipCode" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500" placeholder="12345">
+                    </div>
+                  </div>
+                  <div>
+                    <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+                    <select id="country" name="country" required class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+                      <option value="">Select Country</option>
+                      <option value="US">United States</option>
+                      <option value="CA">Canada</option>
+                      <option value="UK">United Kingdom</option>
+                      <option value="AU">Australia</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-6">
+              <h3 class="text-lg font-medium text-gray-900 mb-4">Order Summary</h3>
+              <div class="text-sm text-gray-600 mb-2">Items: <span id="summaryItems">0</span></div>
+              <div class="flex justify-between font-medium mb-1">
+                <span>Subtotal:</span>
+                <span id="summarySubtotal">$0.00</span>
+              </div>
+              <div class="flex justify-between font-medium mb-1">
+                <span>Delivery Charge:</span>
+                <span>$70.00</span>
+              </div>
+              <div class="flex justify-between text-lg font-bold text-primary-600 mt-2 pt-2 border-t border-gray-200">
+                <span>Total:</span>
+                <span id="summaryTotal">$70.00</span>
+
+  <!-- Script -->
+  <script>
+    const products = [
+      {
+        id: 1,
+        name: "Wireless Earbuds",
+        category: "Audio",
+        subCategory: "Bluetooth",
+        price: 49.99,
+        image: "/api/placeholder/300/200?text=Earbuds",
+        description: "Experience crystal-clear sound with these comfortable wireless earbuds. Perfect for workouts and daily commutes with up to 8 hours of battery life."
+      },
+      {
+        id: 2,
+        name: "Smart Watch",
+        category: "Wearables",
+        subCategory: "Fitness",
+        price: 129.99,
+        image: "/api/placeholder/300/200?text=Smart+Watch",
+        description: "Track your fitness goals, receive notifications, and monitor your heart rate with this stylish and functional smart watch."
+      },
+      {
+        id: 3,
+        name: "Power Bank",
+        category: "Power",
+        subCategory: "Portable",
+        price: 25.00,
+        image: "/api/placeholder/300/200?text=Power+Bank",
+        description: "Never run out of battery again with this compact 10,000mAh power bank. Charges multiple devices simultaneously."
+      },
+      {
+        id: 4,
+        name: "Over-Ear Headphones",
+        category: "Audio",
+        subCategory: "Wired",
+        price: 79.99,
+        image: "/api/placeholder/300/200?text=Headphones",
+        description: "Immerse yourself in rich, high-fidelity sound with these comfortable over-ear headphones featuring noise isolation technology."
+      },
+      {
+        id: 5,
+        name: "Fitness Tracker",
+        category: "Wearables",
+        subCategory: "Health",
+        price: 59.99,
+        image: "/api/placeholder/300/200?text=Fitness+Tracker",
+        description: "Monitor your steps, sleep patterns, and exercise routines with this water-resistant fitness tracker."
+      },
+      {
+        id: 6,
+        name: "Bluetooth Speaker",
+        category: "Audio",
+        subCategory: "Bluetooth",
+        price: 39.99,
+        image: "/api/placeholder/300/200?text=Bluetooth+Speaker",
+        description: "Take your music anywhere with this portable Bluetooth speaker featuring 360-degree sound and 12 hours of playback time."
+      }
+    ];
+
+    // Shopping Cart functionality
+    let cart = [];
+
+    function renderProducts(productList) {
+      const container = document.getElementById("productsContainer");
+      container.innerHTML = "";
+
+      if (productList.length === 0) {
+        container.innerHTML = "<p class='text-center col-span-full'>No products found.</p>";
+        return;
+      }
+
+      productList.forEach(product => {
+        container.innerHTML += `
+          <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300">
+            <div class="relative">
+              <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+              <div class="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">${product.category}</div>
+            </div>
+            <div class="p-5">
+              <div class="flex justify-between items-start">
+                <h3 class="text-lg font-semibold mb-1">${product.name}</h3>
+                <span class="text-blue-600 font-bold">$${product.price.toFixed(2)}</span>
+              </div>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">${product.subCategory}</p>
+              <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm line-clamp-2">${product.description.substring(0, 80)}...</p>
+              <div class="flex justify-between">
+                <button onclick="showProductDetails(${product.id})" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm">
+                  View Details
+                </button>
+                <button onclick="addToCart(${product.id})" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function applyFilters() {
+      const search = document.getElementById("searchInput").value.toLowerCase();
+      const category = document.getElementById("categoryFilter").value;
+      const subCategory = document.getElementById("subCategoryFilter").value;
+
+      const filtered = products.filter(product => {
+        const matchesSearch = product.name.toLowerCase().includes(search);
+        const matchesCategory = !category || product.category === category;
+        const matchesSubCategory = !subCategory || product.subCategory === subCategory;
+        return matchesSearch && matchesCategory && matchesSubCategory;
+      });
+
+      renderProducts(filtered);
+    }
+
+    function updateSubCategories() {
+      const category = document.getElementById("categoryFilter").value;
+      const subCategoryFilter = document.getElementById("subCategoryFilter");
+      subCategoryFilter.innerHTML = `<option value="">All Subcategories</option>`;
+
+      const subCategories = [...new Set(products
+        .filter(p => !category || p.category === category)
+        .map(p => p.subCategory))];
+
+      subCategories.forEach(sub => {
+        subCategoryFilter.innerHTML += `<option value="${sub}">${sub}</option>`;
+      });
+    }
+
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+      
+      const existingItem = cart.find(item => item.id === productId);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          quantity: 1
+        });
+      }
+      
+      updateCartUI();
+      toggleCart(false);
+    }
+
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      updateCartUI();
+    }
+
+    function updateQuantity(productId, change) {
+      const item = cart.find(item => item.id === productId);
+      if (item) {
+        item.quantity += change;
+        if (item.quantity <= 0) {
+          removeFromCart(productId);
+        } else {
+          updateCartUI();
+        }
+      }
+    }
+
+    function updateCartUI() {
+      const cartItemsElement = document.getElementById("cartItems");
+      const cartCountElement = document.getElementById("cartCount");
+      const subtotalElement = document.getElementById("cartSubtotal");
+      
+      // Update cart count
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCountElement.textContent = totalItems;
+      
+      // Update cart items
+      cartItemsElement.innerHTML = "";
+      if (cart.length === 0) {
+        cartItemsElement.innerHTML = "<li class='py-6 text-center'>Your cart is empty</li>";
+      } else {
+        cart.forEach(item => {
+          const subtotal = (item.price * item.quantity).toFixed(2);
+          cartItemsElement.innerHTML += `
+            <li class="flex py-6">
+              <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                <img src="${item.image}" alt="${item.name}" class="h-full w-full object-cover">
+              </div>
+              <div class="ml-4 flex flex-1 flex-col">
+                <div>
+                  <div class="flex justify-between text-base font-medium text-gray-900">
+                    <h3>${item.name}</h3>
+                    <p class="ml-4">$${subtotal}</p>
+                  </div>
+                </div>
+                <div class="flex flex-1 items-end justify-between text-sm">
+                  <div class="flex items-center">
+                    <button onclick="updateQuantity(${item.id}, -1)" class="font-medium text-gray-600 hover:text-gray-800 px-2">-</button>
+                    <p class="text-gray-500 px-2">Qty ${item.quantity}</p>
+                    <button onclick="updateQuantity(${item.id}, 1)" class="font-medium text-gray-600 hover:text-gray-800 px-2">+</button>
+                  </div>
+                  <div class="flex">
+                    <button onclick="removeFromCart(${item.id})" class="font-medium text-indigo-600 hover:text-indigo-500">Remove</button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          `;
+        });
+      }
+      
+      // Update subtotal
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
+      subtotalElement.textContent = `$${subtotal}`;
+    }
+
+    function toggleCart(show) {
+      const cart = document.getElementById("shoppingCart");
+      if (show) {
+        cart.classList.remove("hidden");
+      } else {
+        cart.classList.add("hidden");
+      }
+    }
+
+    function showProductDetails(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+      
+      const modal = document.getElementById("productModal");
+      const modalContent = document.getElementById("productModalContent");
+      
+      modalContent.innerHTML = `
+        <div class="sm:flex sm:items-start">
+          <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+            <div class="mb-4">
+              <img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover rounded-md">
+            </div>
+            <h3 class="text-xl font-semibold leading-6 text-gray-900">${product.name}</h3>
+            <div class="mt-2">
+              <p class="text-sm text-gray-500">${product.category} / ${product.subCategory}</p>
+              <p class="text-blue-600 font-bold text-lg mt-2">$${product.price.toFixed(2)}</p>
+              <p class="text-gray-600 mt-4">${product.description}</p>
+            </div>
+            <div class="mt-6">
+              <button onclick="addToCart(${product.id})" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      modal.classList.remove("hidden");
+    }
+
+    function closeProductModal() {
+      document.getElementById("productModal").classList.add("hidden");
+    }
+
+    // Event listeners
+    document.getElementById("searchInput").addEventListener("input", applyFilters);
+    document.getElementById("categoryFilter").addEventListener("change", () => {
+      updateSubCategories();
+      applyFilters();
+    });
+    document.getElementById("subCategoryFilter").addEventListener("change", applyFilters);
+    document.getElementById("cartToggleBtn").addEventListener("click", () => toggleCart(true));
+    document.getElementById("closeCartBtn").addEventListener("click", () => toggleCart(false));
+    document.getElementById("continueShopping").addEventListener("click", () => toggleCart(false));
+    document.getElementById("closeProductModal").addEventListener("click", closeProductModal);
+
+    // Initialize
+    updateSubCategories();
+    renderProducts(products);
+    updateCartUI();
+  </script>
+
+</body>
+</html>
