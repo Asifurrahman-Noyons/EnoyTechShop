@@ -14,93 +14,82 @@
             transform: translateY(-5px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+        .fixed-header {
+            background-color: #0F172A; /* Dark Navy */
+        }
+        .back-button {
+            background-color: #4B5563; /* Gray */
+            color: white;
+        }
+        .back-button:hover {
+            background-color: #6B7280; /* Darker Gray */
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+<body class="bg-gray-800 text-white flex flex-col min-h-screen">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-indigo-900 via-purple-900 to-indigo-900 shadow-xl shadow-purple-500/30 sticky top-0 z-30 px-4 py-3 text-white">
-        <div class="flex items-center justify-between w-full gap-4 flex-wrap md:flex-nowrap">
-            <h1 class="text-2xl font-bold text-cyan-300 flex-shrink-0">EnoyTech</h1>
-            <div class="hidden md:flex md:items-center md:space-x-4 flex-shrink-0">
-                <select
-                    id="category-filter-md"
-                    class="px-3 py-2 border border-cyan-400 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
-                >
-                    <option value="all">All Categories</option>
-                    <option value="Electronics">Electronics</option>
-                    <option value="Accessories">Accessories</option>
-                </select>
-                <select
-                    id="subcategory-filter-md"
-                    class="px-3 py-2 border border-cyan-400 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
-                >
-                    <option value="all">All Subcategories</option>
-                </select>
-            </div>
-            <div class="relative flex-grow min-w-[200px] md:min-w-0">
-                <input
-                    type="text"
-                    id="search-input"
-                    class="w-full px-4 py-2 rounded-full border border-gray-300 bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-cyan-400"
-                    placeholder="Search for products..."
-                />
-                <button class="absolute right-3 top-2 text-gray-600" id="search-button">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-            <button class="text-cyan-200 hover:text-white relative flex-shrink-0" id="cart-icon">
-                <i class="fas fa-shopping-cart text-xl"></i>
-                <span
-                    class="absolute -top-2 -right-2 bg-cyan-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
-                    id="cart-count">0</span>
+    <header class="fixed-header shadow-sm shadow-cyan-500/30 sticky top-0 z-30 w-full px-4 py-3 flex items-center justify-between">
+        <h1 class="text-2xl mr-2 font-bold text-cyan-300 flex-shrink-0">EnoyTech</h1>
+        <div class="hidden md:flex md:items-center md:space-x-4 flex-shrink-0">
+            <select id="category-filter-md" class="px-3 py-2 border border-cyan-400 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                <option value="all">All Categories</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Accessories">Accessories</option>
+            </select>
+            <select id="subcategory-filter-md" class="px-3 py-2 border border-cyan-400 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                <option value="all">All Subcategories</option>
+            </select>
+        </div>
+        <div class="relative mx-4 flex-grow min-w-[150px]">
+            <input type="text" id="search-input" class="w-full px-4 py-2  rounded-full border border-gray-300 bg-gray-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400" placeholder="Search products..." />
+            <button class="absolute right-3 top-2 text-gray-400" id="search-button">
+                <i class="fas fa-search"></i>
             </button>
         </div>
-        <div class="mt-4 w-full bg-gray-900/70 p-3 rounded-lg backdrop-blur md:hidden">
-            <div class="flex flex-col gap-2">
-                <label class="text-sm font-semibold text-cyan-200">Category</label>
-                <select
-                    id="category-filter-sm"
-                    class="px-3 py-2 border border-cyan-400 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
-                >
-                    <option value="all">All Categories</option>
-                    <option value="Electronics">Electronics</option>
-                    <option value="Accessories">Accessories</option>
-                </select>
-                <label class="text-sm font-semibold text-cyan-200">Subcategory</label>
-                <select
-                    id="subcategory-filter-sm"
-                    class="px-3 py-2 border border-cyan-400 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
-                >
-                    <option value="all">All Subcategories</option>
-                </select>
-            </div>
-        </div>
+        <button class="text-cyan-200 hover:text-white relative flex-shrink-0" id="cart-icon">
+            <i class="fas fa-shopping-cart text-xl"></i>
+            <span class="absolute -top-2 -right-2 bg-cyan-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs" id="cart-count">0</span>
+        </button>
     </header>
 
+    <div class="mt-4 mr-4 ml-4 md:mt-20 w-auto bg-gray-900/70 p-3 rounded-lg backdrop-blur md:hidden">
+        <div class="flex flex-col gap-2">
+            <label class="text-sm font-semibold text-cyan-200">Category</label>
+            <select id="category-filter-sm" class="px-3 py-2 border border-cyan-400 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                <option value="all">All Categories</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Accessories">Accessories</option>
+            </select>
+            <label class="text-sm font-semibold text-cyan-200">Subcategory</label>
+            <select id="subcategory-filter-sm" class="px-3 py-2 border border-cyan-400 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                <option value="all">All Subcategories</option>
+            </select>
+        </div>
+    </div>
+
     <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-4 py-6">
-        <!-- Products Grid -->
+    <main class="flex-grow container mx-auto px-4 py-6 mb-12 mt4">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="products-container">
             <!-- Products will be dynamically inserted here -->
         </div>
     </main>
 
     <!-- Bottom Navigation -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white shadow-lg z-20">
+    <nav class="fixed bottom-0 left-0 right-0 bg-gray-900 shadow-lg z-20">
         <div class="flex justify-around items-center h-16">
-            <a href="#" class="flex flex-col items-center justify-center text-purple-600" id="nav-home">
+            <a href="#" class="flex flex-col items-center justify-center text-cyan-600" id="nav-home">
                 <i class="fas fa-home text-xl"></i>
                 <span class="text-xs mt-1">Home</span>
             </a>
-            <a href="#" class="flex flex-col items-center justify-center text-gray-500 hover:text-purple-600" id="nav-progress">
+            <a href="#" class="flex flex-col items-center justify-center text-gray-500 hover:text-cyan-600" id="nav-progress">
                 <i class="fas fa-tasks text-xl"></i>
                 <span class="text-xs mt-1">Progress</span>
             </a>
-            <a href="#" class="flex flex-col items-center justify-center text-gray-500 hover:text-purple-600" id="nav-invoice">
+            <a href="#" class="flex flex-col items-center justify-center text-gray-500 hover:text-cyan-600" id="nav-invoice">
                 <i class="fas fa-file-invoice text-xl"></i>
                 <span class="text-xs mt-1">Invoice</span>
             </a>
-            <a href="#" class="flex flex-col items-center justify-center text-gray-500 hover:text-purple-600" id="nav-profile">
+            <a href="#" class="flex flex-col items-center justify-center text-gray-500 hover:text-cyan-600" id="nav-profile">
                 <i class="fas fa-user text-xl"></i>
                 <span class="text-xs mt-1">Profile</span>
             </a>
@@ -109,11 +98,11 @@
 
     <!-- Cart Modal -->
     <div class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="cart-modal">
-        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl overflow-y-auto">
+        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-gray-800 shadow-xl overflow-y-auto">
             <div class="p-4">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-bold">Your Cart</h2>
-                    <button class="text-gray-500 hover:text-gray-800" id="close-cart">
+                    <button class="text-gray-400 hover:text-gray-200" id="close-cart">
                         <i class="fas fa-times text-xl"></i>
                     </button>
                 </div>
@@ -138,7 +127,7 @@
                         <span id="cart-total">$5.99</span>
                     </div>
                 </div>
-                <button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg mt-6">
+                <button class="w-full bg-cyan-600 hover:bg-cyan-700 text-white py-3 rounded-lg mt-6">
                     Proceed to Checkout
                 </button>
             </div>
@@ -146,53 +135,59 @@
     </div>
 
     <!-- Profile Page -->
-    <div class="hidden fixed inset-0 bg-gray-50 z-30 pt-16 pb-20 overflow-y-auto" id="profile-page">
+    <div class="hidden fixed inset-0 bg-gray-900 z-30 pt-0 pb-20 overflow-y-auto" id="profile-page">
         <div class="container mx-auto px-4 py-6">
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="bg-gray-800 rounded-lg shadow-md p-6">
+<button 
+    class="mb-4 flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-md px-3 py-2 transition-colors duration-200"
+    onclick="setActiveNav(navHome)">
+    <i class="fas fa-arrow-left mr-2"></i> Back to Home
+</button>
+
                 <div class="flex items-center mb-6">
-                    <div class="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mr-4">
-                        <span class="text-2xl font-bold text-purple-600">SV</span>
+                    <div class="w-20 h-20 rounded-full bg-cyan-100 flex items-center justify-center mr-4">
+                        <span class="text-2xl font-bold text-cyan-600">SV</span>
                     </div>
                     <div>
                         <h2 class="text-xl font-bold">Shantu Vai</h2>
-                        <p class="text-gray-600">shantu.vai@gmail.com</p>
+                        <p class="text-gray-400">shantu.vai@gmail.com</p>
                     </div>
                 </div>
                 <div class="space-y-4">
                     <div class="border rounded-lg overflow-hidden">
-                        <button class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50">
+                        <button class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-700">
                             <div class="flex items-center">
-                                <i class="fas fa-user-circle text-purple-600 mr-3"></i>
+                                <i class="fas fa-user-circle text-cyan-600 mr-3"></i>
                                 <span>Account Information</span>
                             </div>
                             <i class="fas fa-chevron-right text-gray-400"></i>
                         </button>
                         <hr>
-                        <button class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50">
+                        <button class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-700">
                             <div class="flex items-center">
-                                <i class="fas fa-map-marker-alt text-purple-600 mr-3"></i>
+                                <i class="fas fa-map-marker-alt text-cyan-600 mr-3"></i>
                                 <span>Shipping Addresses</span>
                             </div>
                             <i class="fas fa-chevron-right text-gray-400"></i>
                         </button>
                         <hr>
-                        <button class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50">
+                        <button class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-700">
                             <div class="flex items-center">
-                                <i class="fas fa-credit-card text-purple-600 mr-3"></i>
+                                <i class="fas fa-credit-card text-cyan-600 mr-3"></i>
                                 <span>Payment Methods</span>
                             </div>
                             <i class="fas fa-chevron-right text-gray-400"></i>
                         </button>
                         <hr>
-                        <button class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50">
+                        <button class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-700">
                             <div class="flex items-center">
-                                <i class="fas fa-headset text-purple-600 mr-3"></i>
+                                <i class="fas fa-headset text-cyan-600 mr-3"></i>
                                 <span>Help Center</span>
                             </div>
                             <i class="fas fa-chevron-right text-gray-400"></i>
                         </button>
                     </div>
-                    <button class="w-full flex items-center justify-center px-4 py-3 text-red-600 border border-red-600 rounded-lg hover:bg-red-50 mt-6">
+                    <button class="w-full flex items-center justify-center px-4 py-3 text-red-600 border border-red-600 rounded-lg hover:bg-red-700 mt-6">
                         <i class="fas fa-sign-out-alt mr-2"></i>
                         <span>Sign Out</span>
                     </button>
@@ -202,22 +197,30 @@
     </div>
 
     <!-- Progress Page -->
-    <div class="hidden fixed inset-0 bg-gray-50 z-30 pt-16 pb-20 overflow-y-auto" id="progress-page">
+    <div class="hidden fixed inset-0 bg-gray-900 z-30 pt-0 pb-20 overflow-y-auto" id="progress-page">
         <div class="container mx-auto px-4 py-6">
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="bg-gray-800 rounded-lg shadow-md p-6">
+<button 
+    class="mb-4 flex items-center text-gray-700 hover:text-blue-600 text-sm font-medium transition-colors duration-200"
+    onclick="setActiveNav(navHome)">
+    <i class="fas fa-arrow-left mr-2"></i>
+    Back to Home
+</button>
+
+
                 <h2 class="text-xl font-bold mb-4">Your Progress</h2>
-                <p class="text-gray-600">Track your orders and see the status of your purchases here.</p>
+                <p class="text-gray-400">Track your orders and see the status of your purchases here.</p>
                 <div class="space-y-4 mt-4">
                     <!-- Example Order Progress -->
-                    <div class="border rounded-lg p-4">
+                    <div class="border rounded-lg p-4 bg-gray-700">
                         <h3 class="font-semibold">Order #12345</h3>
-                        <p class="text-gray-500">Status: Shipped</p>
-                        <p class="text-gray-500">Estimated Delivery: 2-3 days</p>
+                        <p class="text-gray-400">Status: Shipped</p>
+                        <p class="text-gray-400">Estimated Delivery: 2-3 days</p>
                     </div>
-                    <div class="border rounded-lg p-4">
+                    <div class="border rounded-lg p-4 bg-gray-700">
                         <h3 class="font-semibold">Order #12346</h3>
-                        <p class="text-gray-500">Status: Processing</p>
-                        <p class="text-gray-500">Estimated Delivery: 5-7 days</p>
+                        <p class="text-gray-400">Status: Processing</p>
+                        <p class="text-gray-400">Estimated Delivery: 5-7 days</p>
                     </div>
                 </div>
             </div>
@@ -225,24 +228,31 @@
     </div>
 
     <!-- Invoice Page -->
-    <div class="hidden fixed inset-0 bg-gray-50 z-30 pt-16 pb-20 overflow-y-auto" id="invoice-page">
+    <div class="hidden fixed inset-0 bg-gray-900 z-30 pt-0 pb-20 overflow-y-auto" id="invoice-page">
         <div class="container mx-auto px-4 py-6">
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="bg-gray-800 rounded-lg shadow-md p-6">
+       <button 
+    class="mb-4 flex items-center text-gray-700 hover:text-blue-600 text-sm font-medium transition-colors duration-200"
+    onclick="setActiveNav(navHome)">
+    <i class="fas fa-arrow-left mr-2"></i>
+    Back to Home
+</button>
+
                 <h2 class="text-xl font-bold mb-4">Invoices</h2>
-                <p class="text-gray-600">Here are your past invoices.</p>
+                <p class="text-gray-400">Here are your past invoices.</p>
                 <div class="space-y-4 mt-4">
                     <!-- Example Invoice -->
-                    <div class="border rounded-lg p-4">
+                    <div class="border rounded-lg p-4 bg-gray-700">
                         <h3 class="font-semibold">Invoice #001</h3>
-                        <p class="text-gray-500">Date: January 1, 2023</p>
-                        <p class="text-gray-500">Total: $199.99</p>
-                        <p class="text-gray-500">Status: Paid</p>
+                        <p class="text-gray-400">Date: January 1, 2023</p>
+                        <p class="text-gray-400">Total: $199.99</p>
+                        <p class="text-gray-400">Status: Paid</p>
                     </div>
-                    <div class="border rounded-lg p-4">
+                    <div class="border rounded-lg p-4 bg-gray-700">
                         <h3 class="font-semibold">Invoice #002</h3>
-                        <p class="text-gray-500">Date: February 15, 2023</p>
-                        <p class="text-gray-500">Total: $129.99</p>
-                        <p class="text-gray-500">Status: Unpaid</p>
+                        <p class="text-gray-400">Date: February 15, 2023</p>
+                        <p class="text-gray-400">Total: $129.99</p>
+                        <p class="text-gray-400">Status: Unpaid</p>
                     </div>
                 </div>
             </div>
@@ -258,7 +268,7 @@
                 category: "Electronics",
                 subcategory: "Audio",
                 price: 129.99,
-                image: "/api/placeholder/300/300",
+                image: "https://via.placeholder.com/300",
                 details: "True wireless earbuds with noise cancellation.",
                 rating: 4.7
             },
@@ -268,7 +278,7 @@
                 category: "Electronics",
                 subcategory: "Wearables",
                 price: 199.99,
-                image: "/api/placeholder/300/300",
+                image: "https://via.placeholder.com/300",
                 details: "Water-resistant smartwatch with heart rate monitor.",
                 rating: 4.4
             },
@@ -278,7 +288,17 @@
                 category: "Electronics",
                 subcategory: "Audio",
                 price: 159.99,
-                image: "/api/placeholder/300/300",
+                image: "https://via.placeholder.com/300",
+                details: "Over-ear wireless headphones with noise cancellation.",
+                rating: 4.9
+            },
+            {
+                id: 3,
+                name: "Watch for bow",
+                category: "Accessories",
+                subcategory: "Clocks",
+                price: 159.99,
+                image: "https://via.placeholder.com/300",
                 details: "Over-ear wireless headphones with noise cancellation.",
                 rating: 4.9
             }
@@ -382,14 +402,14 @@
 
             filteredProducts.forEach(product => {
                 const productCard = document.createElement('div');
-                productCard.className = 'bg-white rounded-lg shadow-md overflow-hidden product-card';
+                productCard.className = 'bg-gray-700 rounded-lg shadow-sm overflow-hidden product-card';
 
                 productCard.innerHTML = `
                     <div class="relative">
                         <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
                     </div>
                     <div class="p-4">
-                        <span class="text-xs text-gray-500">${product.category} > ${product.subcategory}</span>
+                        <span class="text-xs text-gray-400">${product.category} > ${product.subcategory}</span>
                         <h3 class="font-semibold text-lg mb-1">${product.name}</h3>
                         <div class="flex items-center mb-2">
                             <div class="text-yellow-400 mr-1">
@@ -397,11 +417,10 @@
                             </div>
                             <span class="text-xs text-gray-500">(${(Math.random() * 500 + 100).toFixed(0)} reviews)</span>
                         </div>
-                        <p class="text-sm text-gray-600 mb-3">${product.details}</p>
+                        <p class="text-sm text-gray-400 mb-3">${product.details}</p>
                         <div class="flex justify-between items-center">
                             <span class="font-bold text-lg">$${product.price.toFixed(2)}</span>
-                            <button class="add-to-cart-btn bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded-lg text-sm" 
-                                data-id="${product.id}">
+                            <button class="add-to-cart-btn bg-cyan-300 hover:bg-cyan-700 text-white px-3 py-1 rounded-lg text-sm" data-id="${product.id}">
                                 Add to Cart
                             </button>
                         </div>
@@ -476,11 +495,11 @@
             } else {
                 cart.forEach(item => {
                     const cartItem = document.createElement('div');
-                    cartItem.className = 'flex items-start border-b pb-4';
+                    cartItem.className = 'flex items-start border-b p-4  rounded-md bg-gray-900';
 
                     cartItem.innerHTML = `
-                        <div class="w-16 h-16 rounded-md overflow-hidden bg-gray-200 mr-4">
-                            <img src="${item.product.image}" alt="${item.product.name}" class="w-full h-full object-cover">
+                        <div class="w-20 h-20 rounded-md overflow-hidden bg-gray-500 mr-4 my-auto">
+                            <img src="${item.product.image}" alt="${item.product.name}" class="w-full h-full object-cover ">
                         </div>
                         <div class="flex-grow">
                             <div class="flex justify-between">
@@ -489,7 +508,7 @@
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>
-                            <p class="text-sm text-gray-500">${item.product.category} > ${item.product.subcategory}</p>
+                            <p class="text-sm text-gray-400">${item.product.category} > ${item.product.subcategory}</p>
                             <div class="flex items-center justify-between mt-2">
                                 <div class="flex items-center border rounded">
                                     <button class="px-2 py-1 decrease-quantity" data-id="${item.product.id}">-</button>
@@ -576,12 +595,12 @@
         // Navigation functionality
         function setActiveNav(activeNav) {
             [navHome, navProgress, navInvoice, navProfile].forEach(nav => {
-                nav.classList.remove('text-purple-600');
+                nav.classList.remove('text-cyan-600');
                 nav.classList.add('text-gray-500');
             });
 
             activeNav.classList.remove('text-gray-500');
-            activeNav.classList.add('text-purple-600');
+            activeNav.classList.add('text-cyan-600');
 
             // Hide all pages
             profilePage.classList.add('hidden');
