@@ -77,19 +77,19 @@
     <!-- Bottom Navigation -->
     <nav class="fixed bottom-0 left-0 right-0 bg-gray-900 shadow-lg z-20">
         <div class="flex justify-around items-center h-16">
-            <a href="#" class="flex flex-col items-center justify-center text-purple-600" id="nav-home">
+            <a href="#" class="flex flex-col items-center justify-center text-cyan-600" id="nav-home">
                 <i class="fas fa-home text-xl"></i>
                 <span class="text-xs mt-1">Home</span>
             </a>
-            <a href="#" class="flex flex-col items-center justify-center text-gray-500 hover:text-purple-600" id="nav-progress">
+            <a href="#" class="flex flex-col items-center justify-center text-gray-500 hover:text-cyan-600" id="nav-progress">
                 <i class="fas fa-tasks text-xl"></i>
                 <span class="text-xs mt-1">Progress</span>
             </a>
-            <a href="#" class="flex flex-col items-center justify-center text-gray-500 hover:text-purple-600" id="nav-invoice">
+            <a href="#" class="flex flex-col items-center justify-center text-gray-500 hover:text-cyan-600" id="nav-invoice">
                 <i class="fas fa-file-invoice text-xl"></i>
                 <span class="text-xs mt-1">Invoice</span>
             </a>
-            <a href="#" class="flex flex-col items-center justify-center text-gray-500 hover:text-purple-600" id="nav-profile">
+            <a href="#" class="flex flex-col items-center justify-center text-gray-500 hover:text-cyan-600" id="nav-profile">
                 <i class="fas fa-user text-xl"></i>
                 <span class="text-xs mt-1">Profile</span>
             </a>
@@ -135,18 +135,18 @@
     </div>
 
     <!-- Profile Page -->
-    <div class="hidden fixed inset-0 bg-gray-900 z-30 pt-16 pb-20 overflow-y-auto" id="profile-page">
+    <div class="hidden fixed inset-0 bg-gray-900 z-30 pt-0 pb-20 overflow-y-auto" id="profile-page">
         <div class="container mx-auto px-4 py-6">
             <div class="bg-gray-800 rounded-lg shadow-md p-6">
-           <button 
+<button 
     class="mb-4 flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-md px-3 py-2 transition-colors duration-200"
     onclick="setActiveNav(navHome)">
     <i class="fas fa-arrow-left mr-2"></i> Back to Home
 </button>
 
                 <div class="flex items-center mb-6">
-                    <div class="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mr-4">
-                        <span class="text-2xl font-bold text-purple-600">SV</span>
+                    <div class="w-20 h-20 rounded-full bg-cyan-100 flex items-center justify-center mr-4">
+                        <span class="text-2xl font-bold text-cyan-600">SV</span>
                     </div>
                     <div>
                         <h2 class="text-xl font-bold">Shantu Vai</h2>
@@ -157,7 +157,7 @@
                     <div class="border rounded-lg overflow-hidden">
                         <button class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-700">
                             <div class="flex items-center">
-                                <i class="fas fa-user-circle text-purple-600 mr-3"></i>
+                                <i class="fas fa-user-circle text-cyan-600 mr-3"></i>
                                 <span>Account Information</span>
                             </div>
                             <i class="fas fa-chevron-right text-gray-400"></i>
@@ -165,7 +165,7 @@
                         <hr>
                         <button class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-700">
                             <div class="flex items-center">
-                                <i class="fas fa-map-marker-alt text-purple-600 mr-3"></i>
+                                <i class="fas fa-map-marker-alt text-cyan-600 mr-3"></i>
                                 <span>Shipping Addresses</span>
                             </div>
                             <i class="fas fa-chevron-right text-gray-400"></i>
@@ -173,7 +173,7 @@
                         <hr>
                         <button class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-700">
                             <div class="flex items-center">
-                                <i class="fas fa-credit-card text-purple-600 mr-3"></i>
+                                <i class="fas fa-credit-card text-cyan-600 mr-3"></i>
                                 <span>Payment Methods</span>
                             </div>
                             <i class="fas fa-chevron-right text-gray-400"></i>
@@ -181,7 +181,7 @@
                         <hr>
                         <button class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-700">
                             <div class="flex items-center">
-                                <i class="fas fa-headset text-purple-600 mr-3"></i>
+                                <i class="fas fa-headset text-cyan-600 mr-3"></i>
                                 <span>Help Center</span>
                             </div>
                             <i class="fas fa-chevron-right text-gray-400"></i>
@@ -197,12 +197,17 @@
     </div>
 
     <!-- Progress Page -->
-    <div class="hidden fixed inset-0 bg-gray-900 z-30 pt-16 pb-20 overflow-y-auto" id="progress-page">
+    <div class="hidden fixed inset-0 bg-gray-900 z-30 pt-0 pb-20 overflow-y-auto" id="progress-page">
         <div class="container mx-auto px-4 py-6">
             <div class="bg-gray-800 rounded-lg shadow-md p-6">
-                <button class="back-button mb-4 flex items-center" onclick="setActiveNav(navHome)">
-                    <i class="fas fa-arrow-left mr-2"></i> Back to Home
-                </button>
+<button 
+    class="mb-4 flex items-center text-gray-700 hover:text-blue-600 text-sm font-medium transition-colors duration-200"
+    onclick="setActiveNav(navHome)">
+    <i class="fas fa-arrow-left mr-2"></i>
+    Back to Home
+</button>
+
+
                 <h2 class="text-xl font-bold mb-4">Your Progress</h2>
                 <p class="text-gray-400">Track your orders and see the status of your purchases here.</p>
                 <div class="space-y-4 mt-4">
@@ -223,12 +228,16 @@
     </div>
 
     <!-- Invoice Page -->
-    <div class="hidden fixed inset-0 bg-gray-900 z-30 pt-16 pb-20 overflow-y-auto" id="invoice-page">
+    <div class="hidden fixed inset-0 bg-gray-900 z-30 pt-0 pb-20 overflow-y-auto" id="invoice-page">
         <div class="container mx-auto px-4 py-6">
             <div class="bg-gray-800 rounded-lg shadow-md p-6">
-                <button class="back-button mb-4 flex items-center" onclick="setActiveNav(navHome)">
-                    <i class="fas fa-arrow-left mr-2"></i> Back to Home
-                </button>
+       <button 
+    class="mb-4 flex items-center text-gray-700 hover:text-blue-600 text-sm font-medium transition-colors duration-200"
+    onclick="setActiveNav(navHome)">
+    <i class="fas fa-arrow-left mr-2"></i>
+    Back to Home
+</button>
+
                 <h2 class="text-xl font-bold mb-4">Invoices</h2>
                 <p class="text-gray-400">Here are your past invoices.</p>
                 <div class="space-y-4 mt-4">
@@ -383,7 +392,7 @@
 
             filteredProducts.forEach(product => {
                 const productCard = document.createElement('div');
-                productCard.className = 'bg-gray-800 rounded-lg shadow-md overflow-hidden product-card';
+                productCard.className = 'bg-gray-700 rounded-lg shadow-md overflow-hidden product-card';
 
                 productCard.innerHTML = `
                     <div class="relative">
@@ -401,7 +410,7 @@
                         <p class="text-sm text-gray-400 mb-3">${product.details}</p>
                         <div class="flex justify-between items-center">
                             <span class="font-bold text-lg">$${product.price.toFixed(2)}</span>
-                            <button class="add-to-cart-btn bg-cyan-300 hover:bg-purple-700 text-white px-3 py-1 rounded-lg text-sm" data-id="${product.id}">
+                            <button class="add-to-cart-btn bg-cyan-300 hover:bg-cyan-700 text-white px-3 py-1 rounded-lg text-sm" data-id="${product.id}">
                                 Add to Cart
                             </button>
                         </div>
@@ -476,11 +485,11 @@
             } else {
                 cart.forEach(item => {
                     const cartItem = document.createElement('div');
-                    cartItem.className = 'flex items-start border-b pb-4 bg-gray-700';
+                    cartItem.className = 'flex items-start border-b p-4  rounded-md bg-gray-900';
 
                     cartItem.innerHTML = `
-                        <div class="w-16 h-16 rounded-md overflow-hidden bg-gray-500 mr-4">
-                            <img src="${item.product.image}" alt="${item.product.name}" class="w-full h-full object-cover">
+                        <div class="w-20 h-20 rounded-md overflow-hidden bg-gray-500 mr-4 my-auto">
+                            <img src="${item.product.image}" alt="${item.product.name}" class="w-full h-full object-cover ">
                         </div>
                         <div class="flex-grow">
                             <div class="flex justify-between">
@@ -576,12 +585,12 @@
         // Navigation functionality
         function setActiveNav(activeNav) {
             [navHome, navProgress, navInvoice, navProfile].forEach(nav => {
-                nav.classList.remove('text-purple-600');
+                nav.classList.remove('text-cyan-600');
                 nav.classList.add('text-gray-500');
             });
 
             activeNav.classList.remove('text-gray-500');
-            activeNav.classList.add('text-purple-600');
+            activeNav.classList.add('text-cyan-600');
 
             // Hide all pages
             profilePage.classList.add('hidden');
