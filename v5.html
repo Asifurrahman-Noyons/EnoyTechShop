@@ -259,404 +259,320 @@
         </div>
     </div>
 
-    <script>
-        // Sample product data
-        const products = [
-            {
-                id: 1,
-                name: "Wireless Earbuds",
-                category: "Electronics",
-                subcategory: "Audio",
-                price: 129.99,
-                image: "https://via.placeholder.com/300",
-                details: "True wireless earbuds with noise cancellation.",
-                rating: 4.7
-            },
-            {
-                id: 2,
-                name: "Smart Watch",
-                category: "Electronics",
-                subcategory: "Wearables",
-                price: 199.99,
-                image: "https://via.placeholder.com/300",
-                details: "Water-resistant smartwatch with heart rate monitor.",
-                rating: 4.4
-            },
-            {
-                id: 3,
-                name: "Wireless Headphones",
-                category: "Electronics",
-                subcategory: "Audio",
-                price: 159.99,
-                image: "https://via.placeholder.com/300",
-                details: "Over-ear wireless headphones with noise cancellation.",
-                rating: 4.9
-            }
-        ];
-
-        // Cart data
-        let cart = [];
-        let filteredProducts = [...products];
-
-        // DOM elements
-        const productsContainer = document.getElementById('products-container');
-        const cartModal = document.getElementById('cart-modal');
-        const cartIcon = document.getElementById('cart-icon');
-        const closeCart = document.getElementById('close-cart');
-        const cartItems = document.getElementById('cart-items');
-        const cartCount = document.getElementById('cart-count');
-        const cartSubtotal = document.getElementById('cart-subtotal');
-        const cartTax = document.getElementById('cart-tax');
-        const cartTotal = document.getElementById('cart-total');
-        const categoryFilterMD = document.getElementById('category-filter-md');
-        const subcategoryFilterMD = document.getElementById('subcategory-filter-md');
-        const categoryFilterSM = document.getElementById('category-filter-sm');
-        const subcategoryFilterSM = document.getElementById('subcategory-filter-sm');
-        const searchInput = document.getElementById('search-input');
-        const searchButton = document.getElementById('search-button');
-
-        // Navigation elements
-        const navHome = document.getElementById('nav-home');
-        const navProgress = document.getElementById('nav-progress');
-        const navInvoice = document.getElementById('nav-invoice');
-        const navProfile = document.getElementById('nav-profile');
-        const profilePage = document.getElementById('profile-page');
-        const progressPage = document.getElementById('progress-page');
-        const invoicePage = document.getElementById('invoice-page');
-
-        // Populate subcategory options based on selected category
-        function updateSubcategories() {
-            const selectedCategoryMD = categoryFilterMD.value;
-            const selectedCategorySM = categoryFilterSM.value;
-            const selectedCategory = selectedCategoryMD === 'all' ? selectedCategorySM : selectedCategoryMD;
-
-            const subcategoryFilter = selectedCategoryMD !== 'all' ? subcategoryFilterMD : subcategoryFilterSM;
-            subcategoryFilter.innerHTML = '<option value="all">All Subcategories</option>';
-
-            if (selectedCategory !== 'all') {
-                const subcategories = [...new Set(
-                    products
-                        .filter(product => product.category === selectedCategory)
-                        .map(product => product.subcategory)
-                )];
-
-                subcategories.forEach(subcategory => {
-                    const option = document.createElement('option');
-                    option.value = subcategory;
-                    option.textContent = subcategory;
-                    subcategoryFilter.appendChild(option);
-                });
-            }
+<script>
+    // Product data
+    const products = [
+        {
+            id: 1,
+            name: "Wireless Earbuds",
+            category: "Electronics",
+            subcategory: "Audio",
+            price: 129.99,
+            image: "https://via.placeholder.com/300",
+            details: "True wireless earbuds with noise cancellation.",
+            rating: 4.7
+        },
+        {
+            id: 2,
+            name: "Smart Watch",
+            category: "Electronics",
+            subcategory: "Wearables",
+            price: 199.99,
+            image: "https://via.placeholder.com/300",
+            details: "Water-resistant smartwatch with heart rate monitor.",
+            rating: 4.4
+        },
+        {
+            id: 3,
+            name: "Wireless Headphones",
+            category: "Electronics",
+            subcategory: "Audio",
+            price: 159.99,
+            image: "https://via.placeholder.com/300",
+            details: "Over-ear wireless headphones with noise cancellation.",
+            rating: 4.9
+        },
+        {
+            id: 4,
+            name: "Watch for man",
+            category: "Accessories",
+            subcategory: "Clocks",
+            price: 159.99,
+            image: "https://via.placeholder.com/300",
+            details: "Stylish watch with leather strap.",
+            rating: 4.5
         }
+    ];
 
-        // Filter products based on category and subcategory
-        function filterProducts() {
-            const selectedCategoryMD = categoryFilterMD.value;
-            const selectedCategorySM = categoryFilterSM.value;
-            const selectedCategory = selectedCategoryMD === 'all' ? selectedCategorySM : selectedCategoryMD;
+    let cart = [];
+    let filteredProducts = [...products];
 
-            const selectedSubcategoryMD = subcategoryFilterMD.value;
-            const selectedSubcategorySM = subcategoryFilterSM.value;
-            const selectedSubcategory = selectedSubcategoryMD === 'all' ? selectedSubcategorySM : selectedSubcategoryMD;
+    // DOM Elements
+    const productsContainer = document.getElementById('products-container');
+    const cartModal = document.getElementById('cart-modal');
+    const cartIcon = document.getElementById('cart-icon');
+    const closeCart = document.getElementById('close-cart');
+    const cartItems = document.getElementById('cart-items');
+    const cartCount = document.getElementById('cart-count');
+    const cartSubtotal = document.getElementById('cart-subtotal');
+    const cartTax = document.getElementById('cart-tax');
+    const cartTotal = document.getElementById('cart-total');
+    const categoryFilterMD = document.getElementById('category-filter-md');
+    const subcategoryFilterMD = document.getElementById('subcategory-filter-md');
+    const categoryFilterSM = document.getElementById('category-filter-sm');
+    const subcategoryFilterSM = document.getElementById('subcategory-filter-sm');
+    const searchInput = document.getElementById('search-input');
+    const searchButton = document.getElementById('search-button');
 
-            const searchTerm = searchInput.value.toLowerCase();
+    const navHome = document.getElementById('nav-home');
+    const navProgress = document.getElementById('nav-progress');
+    const navInvoice = document.getElementById('nav-invoice');
+    const navProfile = document.getElementById('nav-profile');
+    const profilePage = document.getElementById('profile-page');
+    const progressPage = document.getElementById('progress-page');
+    const invoicePage = document.getElementById('invoice-page');
 
-            filteredProducts = products.filter(product => {
-                const categoryMatch = selectedCategory === 'all' || product.category === selectedCategory;
-                const subcategoryMatch = selectedSubcategory === 'all' || product.subcategory === selectedSubcategory;
-                const searchMatch = searchTerm === '' || 
-                    product.name.toLowerCase().includes(searchTerm) || 
-                    product.details.toLowerCase().includes(searchTerm) ||
-                    product.category.toLowerCase().includes(searchTerm) ||
-                    product.subcategory.toLowerCase().includes(searchTerm);
+    function updateSubcategories() {
+        const selectedCategory = categoryFilterMD.value !== 'all' ? categoryFilterMD.value : categoryFilterSM.value;
+        const subcategoryFilter = categoryFilterMD.value !== 'all' ? subcategoryFilterMD : subcategoryFilterSM;
+        subcategoryFilter.innerHTML = '<option value="all">All Subcategories</option>';
 
-                return categoryMatch && subcategoryMatch && searchMatch;
+        if (selectedCategory !== 'all') {
+            const subcategories = [...new Set(products
+                .filter(p => p.category === selectedCategory)
+                .map(p => p.subcategory))];
+            subcategories.forEach(sub => {
+                const option = document.createElement('option');
+                option.value = sub;
+                option.textContent = sub;
+                subcategoryFilter.appendChild(option);
             });
+        }
+    }
 
-            renderProducts();
+    function filterProducts() {
+        const selectedCategory = categoryFilterMD.value !== 'all' ? categoryFilterMD.value : categoryFilterSM.value;
+        const selectedSubcategory = subcategoryFilterMD.value !== 'all' ? subcategoryFilterMD.value : subcategoryFilterSM.value;
+        const searchTerm = searchInput.value.toLowerCase().trim();
+
+        filteredProducts = products.filter(product => {
+            const matchCategory = selectedCategory === 'all' || product.category === selectedCategory;
+            const matchSubcategory = selectedSubcategory === 'all' || product.subcategory === selectedSubcategory;
+            const matchSearch = product.name.toLowerCase().includes(searchTerm) ||
+                                product.details.toLowerCase().includes(searchTerm) ||
+                                product.category.toLowerCase().includes(searchTerm) ||
+                                product.subcategory.toLowerCase().includes(searchTerm);
+            return matchCategory && matchSubcategory && matchSearch;
+        });
+
+        renderProducts();
+    }
+
+    function renderProducts() {
+        productsContainer.innerHTML = '';
+
+        if (filteredProducts.length === 0) {
+            productsContainer.innerHTML = `
+                <div class="col-span-full text-center py-8">
+                    <i class="fas fa-search text-4xl text-gray-300 mb-3"></i>
+                    <p class="text-gray-500">No products found</p>
+                </div>
+            `;
+            return;
         }
 
-        // Display products
-        function renderProducts() {
-            productsContainer.innerHTML = '';
-
-            if (filteredProducts.length === 0) {
-                productsContainer.innerHTML = `
-                    <div class="col-span-full text-center py-8">
-                        <i class="fas fa-search text-4xl text-gray-300 mb-3"></i>
-                        <p class="text-gray-500">No products found</p>
-                    </div>
-                `;
-                return;
-            }
-
-            filteredProducts.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'bg-gray-700 rounded-lg shadow-sm overflow-hidden product-card';
-
-                productCard.innerHTML = `
-                    <div class="relative">
-                        <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
-                    </div>
-                    <div class="p-4">
-                        <span class="text-xs text-gray-400">${product.category} > ${product.subcategory}</span>
-                        <h3 class="font-semibold text-lg mb-1">${product.name}</h3>
-                        <div class="flex items-center mb-2">
-                            <div class="text-yellow-400 mr-1">
-                                ${'★'.repeat(Math.floor(product.rating))}${product.rating % 1 >= 0.5 ? '★' : ''}
-                            </div>
-                            <span class="text-xs text-gray-500">(${(Math.random() * 500 + 100).toFixed(0)} reviews)</span>
+        filteredProducts.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'bg-gray-700 rounded-lg shadow-sm overflow-hidden product-card';
+            card.innerHTML = `
+                <div class="relative">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+                </div>
+                <div class="p-4">
+                    <span class="text-xs text-gray-400">${product.category} > ${product.subcategory}</span>
+                    <h3 class="font-semibold text-lg mb-1">${product.name}</h3>
+                    <div class="flex items-center mb-2">
+                        <div class="text-yellow-400 mr-1">
+                            ${'★'.repeat(Math.floor(product.rating))}${product.rating % 1 >= 0.5 ? '★' : ''}
                         </div>
-                        <p class="text-sm text-gray-400 mb-3">${product.details}</p>
-                        <div class="flex justify-between items-center">
-                            <span class="font-bold text-lg">$${product.price.toFixed(2)}</span>
-                            <button class="add-to-cart-btn bg-cyan-300 hover:bg-cyan-700 text-white px-3 py-1 rounded-lg text-sm" data-id="${product.id}">
-                                Add to Cart
+                        <span class="text-xs text-gray-500">(${Math.floor(Math.random() * 500 + 100)} reviews)</span>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-3">${product.details}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-lg">$${product.price.toFixed(2)}</span>
+                        <button class="add-to-cart-btn bg-cyan-300 hover:bg-cyan-700 text-white px-3 py-1 rounded-lg text-sm" data-id="${product.id}">Add to Cart</button>
+                    </div>
+                </div>
+            `;
+            productsContainer.appendChild(card);
+        });
+
+        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = parseInt(btn.dataset.id);
+                addToCart(id);
+            });
+        });
+    }
+
+    function addToCart(productId) {
+        const product = products.find(p => p.id === productId);
+        if (!product) return;
+
+        const item = cart.find(i => i.product.id === productId);
+        if (item) {
+            item.quantity++;
+        } else {
+            cart.push({ product, quantity: 1 });
+        }
+
+        updateCart();
+
+        const notification = document.createElement('div');
+        notification.className = 'fixed top-4 right-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-md z-50';
+        notification.innerHTML = `
+            <div class="flex">
+                <div class="py-1"><i class="fas fa-check-circle text-green-500 mr-2"></i></div>
+                <div>
+                    <p class="font-bold">Added to Cart</p>
+                    <p class="text-sm">${product.name}</p>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(notification);
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            notification.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => notification.remove(), 500);
+        }, 2000);
+    }
+
+    function updateCart() {
+        cartCount.textContent = cart.reduce((sum, i) => sum + i.quantity, 0);
+        cartItems.innerHTML = '';
+
+        if (cart.length === 0) {
+            cartItems.innerHTML = `<div class="flex flex-col items-center justify-center py-8">
+                <i class="fas fa-shopping-cart text-4xl text-gray-300 mb-3"></i>
+                <p class="text-gray-500">Your cart is empty</p>
+            </div>`;
+        } else {
+            cart.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'flex items-start border-b p-4 rounded-md bg-gray-900';
+                cartItem.innerHTML = `
+                    <div class="w-20 h-20 rounded-md overflow-hidden bg-gray-500 mr-4 my-auto">
+                        <img src="${item.product.image}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex justify-between">
+                            <h4 class="font-medium">${item.product.name}</h4>
+                            <button class="text-gray-400 hover:text-red-500 remove-cart-item" data-id="${item.product.id}">
+                                <i class="fas fa-times"></i>
                             </button>
                         </div>
+                        <p class="text-sm text-gray-400">${item.product.category} > ${item.product.subcategory}</p>
+                        <div class="flex items-center justify-between mt-2">
+                            <div class="flex items-center border rounded">
+                                <button class="px-2 py-1 decrease-quantity" data-id="${item.product.id}">-</button>
+                                <span class="px-2">${item.quantity}</span>
+                                <button class="px-2 py-1 increase-quantity" data-id="${item.product.id}">+</button>
+                            </div>
+                            <span class="font-medium">$${(item.product.price * item.quantity).toFixed(2)}</span>
+                        </div>
                     </div>
                 `;
-
-                productsContainer.appendChild(productCard);
+                cartItems.appendChild(cartItem);
             });
 
-            // Add event listeners to Add to Cart buttons
-            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    const productId = parseInt(e.target.dataset.id);
-                    addToCart(productId);
-                });
+            document.querySelectorAll('.remove-cart-item').forEach(btn => {
+                btn.addEventListener('click', () => removeFromCart(parseInt(btn.dataset.id)));
+            });
+            document.querySelectorAll('.decrease-quantity').forEach(btn => {
+                btn.addEventListener('click', () => updateQuantity(parseInt(btn.dataset.id), -1));
+            });
+            document.querySelectorAll('.increase-quantity').forEach(btn => {
+                btn.addEventListener('click', () => updateQuantity(parseInt(btn.dataset.id), 1));
             });
         }
 
-        // Add to cart function
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
+        const subtotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+        const tax = subtotal * 0.08;
+        const total = subtotal + tax + 5.99;
 
-            if (product) {
-                const existingItem = cart.find(item => item.product.id === productId);
+        cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+        cartTax.textContent = `$${tax.toFixed(2)}`;
+        cartTotal.textContent = `$${total.toFixed(2)}`;
+    }
 
-                if (existingItem) {
-                    existingItem.quantity += 1;
-                } else {
-                    cart.push({
-                        product: product,
-                        quantity: 1
-                    });
-                }
+    function removeFromCart(id) {
+        cart = cart.filter(i => i.product.id !== id);
+        updateCart();
+    }
 
-                updateCart();
-
-                // Show notification
-                const notification = document.createElement('div');
-                notification.className = 'fixed top-4 right-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-md z-50';
-                notification.innerHTML = `
-                    <div class="flex">
-                        <div class="py-1"><i class="fas fa-check-circle text-green-500 mr-2"></i></div>
-                        <div>
-                            <p class="font-bold">Added to Cart</p>
-                            <p class="text-sm">${product.name}</p>
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(notification);
-
-                setTimeout(() => {
-                    notification.style.opacity = '0';
-                    notification.style.transition = 'opacity 0.5s ease';
-                    setTimeout(() => notification.remove(), 500);
-                }, 2000);
-            }
-        }
-
-        // Update cart UI
-        function updateCart() {
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartCount.textContent = totalItems;
-            cartItems.innerHTML = '';
-
-            if (cart.length === 0) {
-                cartItems.innerHTML = `
-                    <div class="flex flex-col items-center justify-center py-8">
-                        <i class="fas fa-shopping-cart text-4xl text-gray-300 mb-3"></i>
-                        <p class="text-gray-500">Your cart is empty</p>
-                    </div>
-                `;
-            } else {
-                cart.forEach(item => {
-                    const cartItem = document.createElement('div');
-                    cartItem.className = 'flex items-start border-b p-4  rounded-md bg-gray-900';
-
-                    cartItem.innerHTML = `
-                        <div class="w-20 h-20 rounded-md overflow-hidden bg-gray-500 mr-4 my-auto">
-                            <img src="${item.product.image}" alt="${item.product.name}" class="w-full h-full object-cover ">
-                        </div>
-                        <div class="flex-grow">
-                            <div class="flex justify-between">
-                                <h4 class="font-medium">${item.product.name}</h4>
-                                <button class="text-gray-400 hover:text-red-500 remove-cart-item" data-id="${item.product.id}">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <p class="text-sm text-gray-400">${item.product.category} > ${item.product.subcategory}</p>
-                            <div class="flex items-center justify-between mt-2">
-                                <div class="flex items-center border rounded">
-                                    <button class="px-2 py-1 decrease-quantity" data-id="${item.product.id}">-</button>
-                                    <span class="px-2">${item.quantity}</span>
-                                    <button class="px-2 py-1 increase-quantity" data-id="${item.product.id}">+</button>
-                                </div>
-                                <span class="font-medium">$${(item.product.price * item.quantity).toFixed(2)}</span>
-                            </div>
-                        </div>
-                    `;
-
-                    cartItems.appendChild(cartItem);
-                });
-
-                // Add event listeners to cart item buttons
-                document.querySelectorAll('.remove-cart-item').forEach(button => {
-                    button.addEventListener('click', function(e) {
-                        const productId = parseInt(e.target.closest('.remove-cart-item').dataset.id);
-                        removeFromCart(productId);
-                    });
-                });
-
-                document.querySelectorAll('.decrease-quantity').forEach(button => {
-                    button.addEventListener('click', function(e) {
-                        const productId = parseInt(e.target.dataset.id);
-                        updateQuantity(productId, -1);
-                    });
-                });
-
-                document.querySelectorAll('.increase-quantity').forEach(button => {
-                    button.addEventListener('click', function(e) {
-                        const productId = parseInt(e.target.dataset.id);
-                        updateQuantity(productId, 1);
-                    });
-                });
-            }
-
-            const subtotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
-            const tax = subtotal * 0.08; // 8% tax
-            const total = subtotal + tax + 5.99; // Adding shipping
-
-            cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
-            cartTax.textContent = `$${tax.toFixed(2)}`;
-            cartTotal.textContent = `$${total.toFixed(2)}`;
-        }
-
-        // Remove from cart
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.product.id !== productId);
+    function updateQuantity(id, change) {
+        const item = cart.find(i => i.product.id === id);
+        if (!item) return;
+        item.quantity += change;
+        if (item.quantity <= 0) {
+            removeFromCart(id);
+        } else {
             updateCart();
         }
+    }
 
-        // Update quantity
-        function updateQuantity(productId, change) {
-            const item = cart.find(item => item.product.id === productId);
-
-            if (item) {
-                item.quantity += change;
-
-                if (item.quantity <= 0) {
-                    removeFromCart(productId);
-                } else {
-                    updateCart();
-                }
-            }
-        }
-
-        // Open/close cart modal
-        cartIcon.addEventListener('click', function() {
-            cartModal.classList.remove('hidden');
-        });
-
-        closeCart.addEventListener('click', function() {
+    cartIcon.addEventListener('click', () => cartModal.classList.remove('hidden'));
+    closeCart.addEventListener('click', () => cartModal.classList.add('hidden'));
+    cartModal.addEventListener('click', e => {
+        if (e.target === cartModal) {
             cartModal.classList.add('hidden');
-        });
-
-        // Close cart when clicking outside
-        cartModal.addEventListener('click', function(e) {
-            if (e.target === cartModal) {
-                cartModal.classList.add('hidden');
-            }
-        });
-
-        // Navigation functionality
-        function setActiveNav(activeNav) {
-            [navHome, navProgress, navInvoice, navProfile].forEach(nav => {
-                nav.classList.remove('text-cyan-600');
-                nav.classList.add('text-gray-500');
-            });
-
-            activeNav.classList.remove('text-gray-500');
-            activeNav.classList.add('text-cyan-600');
-
-            // Hide all pages
-            profilePage.classList.add('hidden');
-            progressPage.classList.add('hidden');
-            invoicePage.classList.add('hidden');
-
-            // Show main content
-            document.querySelector('main').classList.remove('hidden');
-
-            // Show specific page based on navigation
-            if (activeNav === navProgress) {
-                progressPage.classList.remove('hidden');
-            } else if (activeNav === navInvoice) {
-                invoicePage.classList.remove('hidden');
-            } else if (activeNav === navProfile) {
-                profilePage.classList.remove('hidden');
-            }
         }
+    });
 
-        navHome.addEventListener('click', function(e) {
-            e.preventDefault();
-            setActiveNav(navHome);
+    function setActiveNav(activeNav) {
+        [navHome, navProgress, navInvoice, navProfile].forEach(nav => {
+            nav.classList.remove('text-cyan-600');
+            nav.classList.add('text-gray-500');
         });
 
-        navProgress.addEventListener('click', function(e) {
-            e.preventDefault();
-            setActiveNav(navProgress);
-        });
+        activeNav.classList.remove('text-gray-500');
+        activeNav.classList.add('text-cyan-600');
 
-        navInvoice.addEventListener('click', function(e) {
-            e.preventDefault();
-            setActiveNav(navInvoice);
-        });
+        profilePage.classList.add('hidden');
+        progressPage.classList.add('hidden');
+        invoicePage.classList.add('hidden');
+        document.querySelector('main').classList.remove('hidden');
 
-        navProfile.addEventListener('click', function(e) {
-            e.preventDefault();
-            setActiveNav(navProfile);
-        });
+        if (activeNav === navProgress) progressPage.classList.remove('hidden');
+        if (activeNav === navInvoice) invoicePage.classList.remove('hidden');
+        if (activeNav === navProfile) profilePage.classList.remove('hidden');
+    }
 
-        // Filter event listeners
-        categoryFilterMD.addEventListener('change', function() {
-            updateSubcategories();
-            filterProducts();
-        });
+    navHome.addEventListener('click', e => { e.preventDefault(); setActiveNav(navHome); });
+    navProgress.addEventListener('click', e => { e.preventDefault(); setActiveNav(navProgress); });
+    navInvoice.addEventListener('click', e => { e.preventDefault(); setActiveNav(navInvoice); });
+    navProfile.addEventListener('click', e => { e.preventDefault(); setActiveNav(navProfile); });
 
-        subcategoryFilterMD.addEventListener('change', filterProducts);
-        categoryFilterSM.addEventListener('change', function() {
-            updateSubcategories();
-            filterProducts();
-        });
-
-        subcategoryFilterSM.addEventListener('change', filterProducts);
-
-        // Search functionality
-        searchButton.addEventListener('click', filterProducts);
-
-        searchInput.addEventListener('keyup', function(e) {
-            if (e.key === 'Enter') {
-                filterProducts();
-            }
-        });
-
-        // Initialize
+    categoryFilterMD.addEventListener('change', () => {
         updateSubcategories();
-        renderProducts();
-        updateCart();
-    </script>
+        filterProducts();
+    });
+    subcategoryFilterMD.addEventListener('change', filterProducts);
+    categoryFilterSM.addEventListener('change', () => {
+        updateSubcategories();
+        filterProducts();
+    });
+    subcategoryFilterSM.addEventListener('change', filterProducts);
+
+    searchButton.addEventListener('click', filterProducts);
+    searchInput.addEventListener('keyup', e => {
+        if (e.key === 'Enter') filterProducts();
+    });
+
+    updateSubcategories();
+    renderProducts();
+    updateCart();
+</script>
+
 </body>
 </html>
