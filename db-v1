@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Enoy Tech - Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    .sidebar {
+      transition: all 0.3s ease;
+    }
+    .table-header {
+      background-color: #1f2937;
+    }
+    .table-row:hover {
+      background-color: #374151;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white flex h-screen overflow-hidden">
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar w-64 bg-gray-800 p-4 shadow-lg flex-shrink-0 hidden sm:block">
+    <h2 class="text-2xl font-bold text-cyan-400 mb-6"><i class="fas fa-cogs mr-2"></i>Admin</h2>
+    <nav>
+      <ul class="space-y-3 text-lg">
+        <li><a href="#" onclick="showSection('dashboard')" class="block py-2 px-3 hover:bg-gray-700 rounded"><i class="fas fa-chart-line mr-2"></i>Dashboard</a></li>
+        <li><a href="#" onclick="showSection('profile')" class="block py-2 px-3 hover:bg-gray-700 rounded"><i class="fas fa-user-circle mr-2"></i>Profile</a></li>
+        <li><a href="#" onclick="showSection('users')" class="block py-2 px-3 hover:bg-gray-700 rounded"><i class="fas fa-users mr-2"></i>Users</a></li>
+        <li><a href="#" onclick="showSection('products')" class="block py-2 px-3 hover:bg-gray-700 rounded"><i class="fas fa-box mr-2"></i>Products</a></li>
+        <li><a href="#" onclick="showSection('orders')" class="block py-2 px-3 hover:bg-gray-700 rounded"><i class="fas fa-receipt mr-2"></i>Orders</a></li>
+        <li><a href="#" onclick="showSection('reports')" class="block py-2 px-3 hover:bg-gray-700 rounded"><i class="fas fa-file-alt mr-2"></i>Reports</a></li>
+        <li><a href="#" onclick="showSection('settings')" class="block py-2 px-3 hover:bg-gray-700 rounded"><i class="fas fa-cog mr-2"></i>Settings</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Hamburger Menu for Small Devices -->
+  <div class="sm:hidden p-4">
+    <button onclick="toggleSidebar()" class="text-white">
+      <i class="fas fa-bars fa-lg"></i>
+    </button>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-grow p-6 overflow-auto">
+    <!-- Dashboard -->
+    <section id="dashboard" class="section">
+      <h1 class="text-3xl font-bold mb-6">📊 Dashboard Overview</h1>
+      <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        <div class="bg-gray-800 p-5 rounded-lg shadow">
+          <h3 class="text-lg font-semibold text-gray-300">Total Orders</h3>
+          <p class="text-2xl font-bold text-green-400">191</p>
+        </div>
+        <div class="bg-gray-800 p-5 rounded-lg shadow">
+          <h3 class="text-lg font-semibold text-gray-300">Total Stores</h3>
+          <p class="text-2xl font-bold text-blue-400">10</p>
+        </div>
+        <div class="bg-gray-800 p-5 rounded-lg shadow">
+          <h3 class="text-lg font-semibold text-gray-300">Total Products</h3>
+          <p class="text-2xl font-bold text-yellow-400">402</p>
+        </div>
+        <div class="bg-gray-800 p-5 rounded-lg shadow">
+          <h3 class="text-lg font-semibold text-gray-300">Total Customers</h3>
+          <p class="text-2xl font-bold text-purple-400">7</p>
+        </div>
+      </div>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">📦 Order Status Overview</h2>
+      <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        <div class="bg-gray-800 p-5 rounded-lg shadow">
+          <h3 class="text-lg font-semibold text-gray-300">Pending</h3>
+          <p class="text-2xl font-bold text-red-400">59</p>
+        </div>
+        <div class="bg-gray-800 p-5 rounded-lg shadow">
+          <h3 class="text-lg font-semibold text-gray-300">Confirmed</h3>
+          <p class="text-2xl font-bold text-green-400">21</p>
+        </div>
+        <div class="bg-gray-800 p-5 rounded-lg shadow">
+          <h3 class="text-lg font-semibold text-gray-300">Packaging</h3>
+          <p class="text-2xl font-bold text-yellow-400">9</p>
+        </div>
+        <div class="bg-gray-800 p-5 rounded-lg shadow">
+          <h3 class="text-lg font-semibold text-gray-300">Out for Delivery</h3>
+          <p class="text-2xl font-bold text-blue-400">8</p>
+        </div>
+        <div class="bg-gray-800 p-5 rounded-lg shadow">
+          <h3 class="text-lg font-semibold text-gray-300">Delivered</h3>
+          <p class="text-2xl font-bold text-green-500">76</p>
+        </div>
+        <div class="bg-gray-800 p-5 rounded-lg shadow">
+          <h3 class="text-lg font-semibold text-gray-300">Canceled</h3>
+          <p class="text-2xl font-bold text-red-500">9</p>
+        </div>
+        <div class="bg-gray-800 p-5 rounded-lg shadow">
+          <h3 class="text-lg font-semibold text-gray-300">Returned</h3>
+          <p class="text-2xl font-bold text-red-400">4</p>
+        </div>
+        <div class="bg-gray-800 p-5 rounded-lg shadow">
+          <h3 class="text-lg font-semibold text-gray-300">Failed to Deliver</h3>
+          <p class="text-2xl font-bold text-red-500">5</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Users -->
+    <section id="users" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4">👥 User Management</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-gray-800 rounded-lg shadow">
+          <thead>
+            <tr class="table-header text-left">
+              <th class="px-4 py-2">ID</th>
+              <th class="px-4 py-2">Name</th>
+              <th class="px-4 py-2">Email</th>
+              <th class="px-4 py-2">Status</th>
+              <th class="px-4 py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="table-row">
+              <td class="px-4 py-2">1</td>
+              <td class="px-4 py-2">John Doe</td>
+              <td class="px-4 py-2">john@example.com</td>
+              <td class="px-4 py-2">Active</td>
+              <td class="px-4 py-2 space-x-2">
+                <button class="text-blue-400 hover:underline">Edit</button>
+                <button class="text-red-400 hover:underline">Delete</button>
+              </td>
+            </tr>
+            <!-- More rows -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section id="products" class="section hidden">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-bold">📦 Product Management</h2>
+        <button onclick="toggleAddProduct()" class="bg-cyan-500 hover:bg-cyan-400 px-4 py-2 rounded shadow">+ Add Product</button>
+      </div>
+      <div id="addProductForm" class="hidden bg-gray-800 p-4 rounded-lg mb-6">
+        <form onsubmit="event.preventDefault(); alert('Product Submitted!')">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input type="text" placeholder="Product Name" required class="p-2 rounded bg-gray-700 w-full" />
+            <input type="number" placeholder="Buy Price" required class="p-2 rounded bg-gray-700 w-full" />
+            <input type="number" placeholder="Sell Price" required class="p-2 rounded bg-gray-700 w-full" />
+            <input type="text" placeholder="Category" required class="p-2 rounded bg-gray-700 w-full" />
+            <input type="text" placeholder="Subcategory" required class="p-2 rounded bg-gray-700 w-full" />
+          </div>
+          <textarea placeholder="Description" required class="mt-4 p-2 rounded bg-gray-700 w-full"></textarea>
+          <button type="submit" class="mt-4 bg-green-500 hover:bg-green-400 px-4 py-2 rounded">Submit</button>
+        </form>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-gray-800 rounded-lg shadow">
+          <thead>
+            <tr class="table-header text-left">
+              <th class="px-4 py-2">ID</th>
+              <th class="px-4 py-2">Name</th>
+              <th class="px-4 py-2">Buy</th>
+              <th class="px-4 py-2">Sell</th>
+              <th class="px-4 py-2">Stock</th>
+              <th class="px-4 py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="table-row">
+              <td class="px-4 py-2">1</td>
+              <td class="px-4 py-2">Wireless Earbuds</td>
+              <td class="px-4 py-2">$100</td>
+              <td class="px-4 py-2">$130</td>
+              <td class="px-4 py-2">50</td>
+              <td class="px-4 py-2 space-x-2">
+                <button class="text-blue-400 hover:underline">Edit</button>
+                <button class="text-red-400 hover:underline">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Orders -->
+    <section id="orders" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4">📄 Order Management</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-gray-800 rounded-lg shadow">
+          <thead>
+            <tr class="table-header text-left">
+              <th class="px-4 py-2">Order ID</th>
+              <th class="px-4 py-2">User</th>
+              <th class="px-4 py-2">Total</th>
+              <th class="px-4 py-2">Status</th>
+              <th class="px-4 py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="table-row">
+              <td class="px-4 py-2">1001</td>
+              <td class="px-4 py-2">John Doe</td>
+              <td class="px-4 py-2">$130</td>
+              <td class="px-4 py-2">Pending</td>
+              <td class="px-4 py-2 space-x-2">
+                <button class="text-green-400 hover:underline">Approve</button>
+                <button class="text-red-400 hover:underline">Cancel</button>
+              </td>
+            </tr>
+            <tr class="table-row">
+              <td class="px-4 py-2">1002</td>
+              <td class="px-4 py-2">Jane Smith</td>
+              <td class="px-4 py-2">$99</td>
+              <td class="px-4 py-2">Confirmed</td>
+              <td class="px-4 py-2 space-x-2">
+                <button class="text-blue-400 hover:underline">View</button>
+              </td>
+            </tr>
+            <tr class="table-row">
+              <td class="px-4 py-2">1003</td>
+              <td class="px-4 py-2">Alice Johnson</td>
+              <td class="px-4 py-2">$200</td>
+              <td class="px-4 py-2">Canceled</td>
+              <td class="px-4 py-2 space-x-2">
+                <button class="text-blue-400 hover:underline">View</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Profile -->
+    <section id="profile" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4">👤 Admin Profile</h2>
+      <div class="bg-gray-800 p-6 rounded-lg shadow-lg max-w-2xl mx-auto">
+        <div class="flex items-center gap-4 mb-6">
+          <svg class="w-20 h-20 rounded-full border-2 border-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" fill="currentColor" />
+          </svg>
+          <div>
+            <h3 class="text-xl font-semibold">Admin Name</h3>
+            <p class="text-gray-400">admin@enoytech.com</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reports -->
+    <section id="reports" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4">📈 Reports Summary</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-gray-800 p-4 rounded-lg shadow text-center">
+          <h3 class="text-lg text-gray-300">Monthly Sales</h3>
+          <p class="text-3xl font-bold text-green-400">$12,500</p>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg shadow text-center">
+          <h3 class="text-lg text-gray-300">New Users</h3>
+          <p class="text-3xl font-bold text-blue-400">45</p>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg shadow text-center">
+          <h3 class="text-lg text-gray-300">Top Product</h3>
+          <p class="text-xl text-yellow-400">Wireless Earbuds</p>
+        </div>
+      </div>
+      <p class="mt-4 text-gray-400">📌 Detailed charts and CSV export features coming soon.</p>
+    </section>
+
+    <!-- Settings -->
+    <section id="settings" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4">⚙️ Admin Settings</h2>
+      <div class="bg-gray-800 p-6 rounded-lg shadow max-w-2xl">
+        <form onsubmit="event.preventDefault(); alert('Settings Saved!')" class="space-y-4">
+          <label class="flex items-center gap-2 text-gray-300">
+            <input type="checkbox" class="accent-cyan-500"> Enable Notifications
+          </label>
+          <label class="flex items-center gap-2 text-gray-300">
+            <input type="checkbox" class="accent-cyan-500"> Dark Mode (Auto)
+          </label>
+          <button type="submit" class="bg-green-500 hover:bg-green-400 px-4 py-2 rounded">Save Changes</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JS Script -->
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function toggleAddProduct() {
+      document.getElementById('addProductForm').classList.toggle('hidden');
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('hidden');
+    }
+
+    // Default section
+    window.onload = () => showSection('dashboard');
+  </script>
+</body>
+</html>
